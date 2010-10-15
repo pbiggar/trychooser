@@ -1,0 +1,309 @@
+#!/usr/bin/env python
+
+import sys
+
+# A node in the decision tree
+class N: # Node
+  def __init__ (self, prompt, help, action):
+    self.prompt = prompt
+    self.help = help
+    self.action = action
+
+# this deletes a character, then moves to the next option.
+class D: # delete_command
+  def __init__(self, next):
+    self.next = next
+
+finish = object()
+error = object()
+
+################
+# Build each node with it's data
+################
+
+a = N ("Run everything", "Run all platforms, tests and talos, and don't ask any more questions", ' -a')
+
+b_od = N ("Both optimized and debug", "All builds and tests will run both on optimized and debug builds", ' -b do')
+b_o = N ("Just optimized", "Only use optimized builds, do not use debug builds", ' -b d')
+b_d = N ("Just debug", "Only use debug builds, do not use optimized builds", ' -b o')
+
+d_all_m_all = N ("All platforms", "Build on all platforms, both desktop and mobile", ' -d all -m all')
+
+d_all = N ("All desktop platforms", "Build on all desktop platforms", ' -d all')
+d_any = N ("Any desktop platforms", "Would you like to be asked about each desktop platform", ' -d ')
+d_linux = N ("Linux", "Build on i386 (32-bit) linux", 'linux,')
+d_linux64 = N ("linux64", "Build on x86-64 (64-bit) linux", 'linux64,')
+d_macosx = N ("macosx", "Build on Mac OSX 10.5 (i386, 32-bit, part of a universal binary)", 'macosx,')
+d_macosx64 = N ("macosx64", "Build on Mac OSX 10.6 (x86-64, 64-bit, part of a universal binary)", 'macosx64,')
+d_win32 = N ("win32", "Build on Windows", 'win32,')
+
+m_all = N ("All mobile platforms", "Build on all mobile platforms", ' -m all')
+m_any = N ("Any mobile platforms", "Would you like to be asked about each mobile platform", ' -m ')
+m_android = N ("android-r7", "Build on Android", 'android-r7,')
+m_maemo_qt = N ("maemo5-gtk", "Build on GTK version of Maemo", 'maemo5-gtk,')
+m_maemo_gtk = N ("maemo5-qt", "Build on QT version of Maemo", 'maemo5-qt,')
+
+u_all = N ("All Unit tests", "Run all unit tests on all chosen platforms", ' -u all')
+u_any = N ("Any unit tests", "Would you like to be asked about running each set of unit tests", ' -u ')
+u_reftest = N ("reftest", "Run reftests", 'reftest,')
+u_crashtest = N ("crashtest", "Run crashtest tests", 'crashtest,')
+u_xpcshell = N ("xpcshell", "Run xpcshell tests", 'xpcshell,')
+u_jsreftest = N ("jsreftest", "Run jsreftests", 'jsreftest,')
+u_opengl = N ("opengl", "Run opengl tests", 'opengl,')
+u_mochitests = N ("Run all mochitests", "Run all of the mochitests", 'mochitests,')
+u_mochitest1 = N ("mochitest-1", "Run mochitest-1", 'mochitest-1,')
+u_mochitest2 = N ("mochitest-2", "Run mochitest-2", 'mochitest-2,')
+u_mochitest3 = N ("mochitest-3", "Run mochitest-3", 'mochitest-3,')
+u_mochitest4 = N ("mochitest-4", "Run mochitest-4", 'mochitest-4,')
+u_mochitest5 = N ("mochitest-5", "Run mochitest-5", 'mochitest-5,')
+u_mochitesto = N ("mochitest-o", "Run mochitest-o", 'mochitest-o,')
+
+t_all = N ("All talos tests", "Run all talos tests on all chosen platforms", ' -t all')
+t_any = N ("Any talos tests", "Would you like to be asked about running each set of talos tests", ' -t ')
+t_nochrome = N ("nochrome", "Run nochrome suite", 'nochrome,')
+t_dromaeo = N ("dromaeo", "Run dromaeo suite", 'dromaeo,')
+t_a11y = N ("a11y", "Run a11y suite", 'a11y,')
+t_svg = N ("svg", "Run svg suite", 'svg,')
+t_chrome = N ("chrome", "Run chrome suite", 'chrome,')
+t_tp4 = N ("tp4", "Run tp4 suite", 'tp4,')
+t_dirty = N ("dirty", "Run dirty suite", 'dirty,')
+t_scroll = N ("scroll", "Run scroll suite", 'scroll,')
+t_cold = N ("cold", "Run cold suite", 'cold,')
+t_v8 = N ("v8", "Run v8 suite", 'v8,')
+
+
+
+################
+# Build decision tree. Each object has a y and n property, which are chosen if
+# Y or N is chosen. That property is the next question.
+################
+
+a.y = finish
+a.n = b_od
+
+b_od.y = d_all_m_all
+b_od.n = b_o
+b_o.y = d_all_m_all
+b_o.n = b_d
+b_d.y = d_all_m_all
+b_d.n = error
+
+
+d_all_m_all.y = u_all
+d_all_m_all.n = d_all
+
+d_all.y = m_all
+d_all.n = d_any
+d_any.y = d_linux
+d_any.n = m_all
+d_linux.y = d_linux64
+d_linux.n = d_linux64
+d_linux64.y = d_macosx
+d_linux64.n = d_macosx
+d_macosx.y = d_macosx64
+d_macosx.n = d_macosx64
+d_macosx64.y = d_win32
+d_macosx64.n = d_win32
+d_win32.y = D(m_all)
+d_win32.n = D(m_all)
+
+m_all.y = u_all
+m_all.n = m_any
+m_any.y = m_android
+m_any.n = u_all
+m_android.y = m_maemo_qt
+m_android.n = m_maemo_qt
+m_maemo_qt.y = m_maemo_gtk
+m_maemo_qt.n = m_maemo_gtk
+m_maemo_gtk.y = D(u_all)
+m_maemo_gtk.n = D(u_all)
+
+u_all.y = t_all
+u_all.n = u_any
+u_any.y = u_reftest
+u_any.n = t_all
+u_reftest.y = u_crashtest
+u_reftest.n = u_crashtest
+u_crashtest.y = u_xpcshell
+u_crashtest.n = u_xpcshell
+u_xpcshell.y = u_jsreftest
+u_xpcshell.n = u_jsreftest
+u_jsreftest.y = u_opengl
+u_jsreftest.n = u_opengl
+u_opengl.y = u_mochitests
+u_opengl.n = u_mochitests
+u_mochitests.y = D(t_all)
+u_mochitests.n = u_mochitest1
+u_mochitest1.y = u_mochitest2
+u_mochitest1.n = u_mochitest2
+u_mochitest2.y = u_mochitest3
+u_mochitest2.n = u_mochitest3
+u_mochitest3.y = u_mochitest4
+u_mochitest3.n = u_mochitest4
+u_mochitest4.y = u_mochitest5
+u_mochitest4.n = u_mochitest5
+u_mochitest5.y = u_mochitesto
+u_mochitest5.n = u_mochitesto
+u_mochitesto.y = D(t_all)
+u_mochitesto.n = D(t_all)
+
+t_all.y = finish
+t_all.n = t_any
+t_any.y = t_nochrome
+t_any.n = finish
+t_nochrome.y = t_dromaeo
+t_nochrome.n = t_dromaeo
+t_dromaeo.y = t_a11y
+t_dromaeo.n = t_a11y
+t_a11y.y = t_svg
+t_a11y.n = t_svg
+t_svg.y = t_chrome
+t_svg.n = t_chrome
+t_chrome.y = t_tp4
+t_chrome.n = t_tp4
+t_tp4.y = t_dirty
+t_tp4.n = t_dirty
+t_dirty.y = t_scroll
+t_dirty.n = t_scroll
+t_scroll.y = t_cold
+t_scroll.n = t_cold
+t_cold.y = t_v8
+t_cold.n = t_v8
+t_v8.y = D(finish)
+t_v8.n = D(finish)
+
+################
+# The actual algorithm is simple
+################
+
+def run_algorithm(state):
+
+  node = a
+  string = 'try:'
+  while node != finish:
+    state.say(node.prompt + '?\n')
+    input = state.prompt()
+    if input in 'Yy':
+      string += node.action
+      node = node.y
+    elif input in 'Nn':
+      node = node.n
+    elif input == '?':
+      state.say(node.help)
+    else:
+      state.say("Invalid option, please try again")
+
+    if node == error:
+      state.say("Invalid selection")
+      state.exit(-1)
+    elif isinstance(node, D):
+      string = string[:-1] # remove last character
+      node = node.next
+
+  ################
+  # Hard to test these above, so use string search for weird flag combination
+  ################
+
+  desktops = 'linux,linux64,macosx,macosx64,win32'.split(',')
+  mobiles = 'android-r7,maemo5-gtk,maemo5-qt'.split(',')
+  unittests = 'reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o'.split(',')
+  taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'.split(',')
+
+
+  if string.find ('-d') + string.find ('-m') + string.find('-a') == -3:
+    state.say("no platform selected")
+    state.say ("Invalid selection")
+    state.exit(-1)
+
+  if string.find ('-b') + string.find('-a') == -2:
+    state.say ("no build selected")
+    state.say ("Invalid selection")
+    state.exit(-1)
+
+  if string.find ('-d') != -1 and \
+     string.find ('-d all') == -1 and \
+     (sum([string.find(x) for x in desktops]) == -1*len(desktops)):
+    state.say ("no desktop platform selected, despite asking for some")
+    state.say ("Invalid selection")
+    state.exit(-1)
+
+  if string.find ('-m') != -1 and \
+     string.find ('-m all') == -1 and \
+     (sum([string.find(x) for x in mobiles]) == -1*len(mobiles)):
+    state.say ("no mobile platform selected, despite asking for some")
+    state.say ("Invalid selection")
+    state.exit(-1)
+
+  if string.find ('-u') != -1 and \
+     string.find ('-u all') == -1 and \
+     (sum([string.find(x) for x in unittests]) == -1*len(unittests)):
+    state.say ("no unit tests selected, despite asking for some")
+    state.say ("Invalid selection")
+    state.exit(-1)
+
+  if string.find ('-t') != -1 and \
+     string.find ('-t all') == -1 and \
+     (sum([string.find(x) for x in taloss]) == -1*len(taloss)):
+    state.say ("no talos tests selected, despite asking for some")
+    state.say ("Invalid selection")
+    state.exit(-1)
+
+  return string
+
+
+
+if __name__ == '__main__':
+
+
+  class Test_interface:
+
+    # print isn't a function
+    def say(self, string):
+      print '\n' + string,
+
+    def prompt(self):
+      return raw_input('[Yn?]\n')
+
+    def exit(self, code):
+      sys.exit(code)
+
+
+  print run_algorithm(Test_interface())
+
+
+else:
+
+  from mercurial import ui
+
+  class HG_interface:
+
+    def __init__ (self, ui, repo):
+      self.ui = ui
+      self.repo = repo
+
+    def say(self, string):
+      self.ui.write(string)
+      self.ui.flush()
+
+    def prompt(self):
+      index = self.ui.promptchoice('[Yn?]', ['&Yes', '&no', '&?'], default=0)
+      return 'Yn?'[index]
+
+    def exit(self, code):
+      sys.exit(code)
+
+
+  def run_mercurial_command(ui, repo, *args, **kwargs):
+    """Build a TryChooser string by asking a few questions.
+    
+For all questions, choosing Y means adding something to the TryChooser string. Choosing ? shows context-sensitive help."""
+    string = run_algorithm(HG_interface(ui, repo))
+    ui.write(string + '\n')
+    
+
+  # Mercurial interface
+  cmdtable = { "trychooser": (run_mercurial_command, [], '') }
+
+
+
+# TODO: add an MQ option to qrefresh

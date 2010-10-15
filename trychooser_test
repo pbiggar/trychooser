@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+
+import subprocess
+import sys
+
+def run (input):
+  proc = subprocess.Popen("./trychooser", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+  (stdout, _) = proc.communicate(input)
+  return (stdout.split("\n")[-2], stdout)
+
+
+tests = [
+    ('Y', '-a'),
+    ('NYYYYY', '-b do -d all -m all -u all -t all'),
+    ('NNYYYY', '-b d -d all -m all -u all -t all'),
+    ('NNNYYYY', '-b o -d all -m all -u all -t all'),
+    ('NYNNYYYYYYYYY', '-b do -d linux,linux64,macosx,macosx64,win32 -m all -u all -t all'),
+    ('NYNNYNNYYYYYY', '-b do -d macosx,macosx64,win32 -m all -u all -t all'),
+    ('NYNNNNYYYYYY', '-b do -m android-r7,maemo5-gtk,maemo5-qt -u all -t all'),
+    ('NYNNNNYNYYYY', '-b do -m maemo5-gtk,maemo5-qt -u all -t all'),
+    ('NYNNNNYYNYYY', '-b do -m android-r7,maemo5-qt -u all -t all'),
+    ('NYNNNNYYYNYY', '-b do -m android-r7,maemo5-gtk -u all -t all'),
+    ('NYNNNNYNNYYY', '-b do -m maemo5-qt -u all -t all'),
+    ('NYNNNNYYNNYY', '-b do -m android-r7 -u all -t all'),
+    ('NYYNNY', '-b do -d all -m all -t all'),
+    ('NYYNYYYYYYNYYYYYYY', '-b do -d all -m all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
+    ('NYYNYYYYYYNYYYYNNY', '-b do -d all -m all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4 -t all'),
+    ('NYYNYYYYYYNYYNNYYY', '-b do -d all -m all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-5,mochitest-o -t all'),
+    ('NYYNYNNYYYNYYYYYYY', '-b do -d all -m all -u xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
+    ('NYYNYYYYYYYY', '-b do -d all -m all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitests -t all'),
+    ('NYYYNN', '-b do -d all -m all -u all'),
+    ('NYYYNYYYYYYYYYYY', '-b do -d all -m all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'),
+    ('NYYYNYNNYYYYYYYY', '-b do -d all -m all -u all -t a11y,svg,chrome,tp4,dirty,scroll,cold,v8'),
+    ('NYYYNYYYYYYYYYNN', '-b do -d all -m all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll'),
+
+    ]
+
+invalid_tests = [
+    'NYNNNNNYY', # No platforms
+    'NNNNYYY', # No builds
+    'NYNNYNNNNNYYY', # Wanted desktop, none picked
+    'NYNYNYNNNYY', # Wanted mobile, none picked
+    'NYYNYNNNNNNNNNNNNY', # Wanted unittests, none picked
+    'NYYYNYNNNNNNNNNN', # Wanted talos, none picked
+    ]
+
+tests = [(a, 'try: ' + b) for (a,b) in tests]
+tests += [(a, 'Invalid selection') for a in invalid_tests]
+
+for (input, expected) in tests:
+  (output, full_output) = run("\n".join(input))
+
+  if output != expected:
+    print "Fail:\n\texpected:\n\t\t" + expected + "\n\tgot:\n\t\t" + output
+    print full_output
+    print input
+    sys.exit(-1)
+  else:
+    print "Pass [" + input + "]: '" + expected + "'"
