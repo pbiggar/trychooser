@@ -27,10 +27,10 @@ b_od = N ("Both optimized and debug", "All builds and tests will run both on opt
 b_o = N ("Just optimized", "Only use optimized builds, do not use debug builds", ' -b d')
 b_d = N ("Just debug", "Only use debug builds, do not use optimized builds", ' -b o')
 
-d_all_m_all = N ("All platforms", "Build on all platforms, both desktop and mobile", ' -d all -m all')
+d_all_m_all = N ("All platforms", "Build on all platforms, both desktop and mobile", ' -p all -m all')
 
-d_all = N ("All desktop platforms", "Build on all desktop platforms", ' -d all')
-d_any = N ("Any desktop platforms", "Would you like to be asked about each desktop platform", ' -d ')
+d_all = N ("All desktop platforms", "Build on all desktop platforms", ' -p all')
+d_any = N ("Any desktop platforms", "Would you like to be asked about each desktop platform", ' -p ')
 d_linux = N ("Linux", "Build on i386 (32-bit) linux", 'linux,')
 d_linux64 = N ("linux64", "Build on x86-64 (64-bit) linux", 'linux64,')
 d_macosx = N ("macosx", "Build on Mac OSX 10.5 (i386, 32-bit, part of a universal binary)", 'macosx,')
@@ -210,7 +210,7 @@ def run_algorithm(state):
   taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'.split(',')
 
 
-  if string.find ('-d') + string.find ('-m') + string.find('-a') == -3:
+  if string.find ('-p') + string.find ('-m') + string.find('-a') == -3:
     state.say("no platform selected")
     state.say ("Invalid selection")
     state.exit(-1)
@@ -220,8 +220,8 @@ def run_algorithm(state):
     state.say ("Invalid selection")
     state.exit(-1)
 
-  if string.find ('-d') != -1 and \
-     string.find ('-d all') == -1 and \
+  if string.find ('-p') != -1 and \
+     string.find ('-p all') == -1 and \
      (sum([string.find(x) for x in desktops]) == -1*len(desktops)):
     state.say ("no desktop platform selected, despite asking for some")
     state.say ("Invalid selection")
