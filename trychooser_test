@@ -12,8 +12,8 @@ def run (input):
 tests = [
     ('Y', '-a'),
     ('NYYYYY', '-b do -p all -m all -u all -t all'),
-    ('NNYYYY', '-b d -p all -m all -u all -t all'),
-    ('NNNYYYY', '-b o -p all -m all -u all -t all'),
+    ('NNYYYY', '-b o -p all -m all -u all -t all'),
+    ('NNNYYYY', '-b d -p all -m all -u all -t all'),
     ('NYNNYYYYYYYYY', '-b do -p linux,linux64,macosx,macosx64,win32 -m all -u all -t all'),
     ('NYNNYNNYYYYYY', '-b do -p macosx,macosx64,win32 -m all -u all -t all'),
     ('NYNNNNYYYYYY', '-b do -m android-r7,maemo5-gtk,maemo5-qt -u all -t all'),
@@ -32,7 +32,6 @@ tests = [
     ('NYYYNYYYYYYYYYYY', '-b do -p all -m all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'),
     ('NYYYNYNNYYYYYYYY', '-b do -p all -m all -u all -t a11y,svg,chrome,tp4,dirty,scroll,cold,v8'),
     ('NYYYNYYYYYYYYYNN', '-b do -p all -m all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll'),
-
     ]
 
 invalid_tests = [

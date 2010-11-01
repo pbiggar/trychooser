@@ -24,8 +24,8 @@ error = object()
 a = N ("Run everything", "Run all platforms, tests and talos, and don't ask any more questions", ' -a')
 
 b_od = N ("Both optimized and debug", "All builds and tests will run both on optimized and debug builds", ' -b do')
-b_o = N ("Just optimized", "Only use optimized builds, do not use debug builds", ' -b d')
-b_d = N ("Just debug", "Only use debug builds, do not use optimized builds", ' -b o')
+b_o = N ("Just optimized", "Only use optimized builds, do not use debug builds", ' -b o')
+b_d = N ("Just debug", "Only use debug builds, do not use optimized builds", ' -b d')
 
 d_all_m_all = N ("All platforms", "Build on all platforms, both desktop and mobile", ' -p all -m all')
 
