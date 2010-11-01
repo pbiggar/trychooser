@@ -14,6 +14,10 @@ class D: # delete_command
   def __init__(self, next):
     self.next = next
 
+class NoPrompt:
+  def __init__ (self, action):
+    self.action = action
+
 finish = object()
 error = object()
 
@@ -36,12 +40,14 @@ d_linux64 = N ("linux64", "Build on x86-64 (64-bit) linux", 'linux64,')
 d_macosx = N ("macosx", "Build on Mac OSX 10.5 (i386, 32-bit, part of a universal binary)", 'macosx,')
 d_macosx64 = N ("macosx64", "Build on Mac OSX 10.6 (x86-64, 64-bit, part of a universal binary)", 'macosx64,')
 d_win32 = N ("win32", "Build on Windows", 'win32,')
+d_none = NoPrompt (" -p none")
 
 m_all = N ("All mobile platforms", "Build on all mobile platforms", ' -m all')
 m_any = N ("Any mobile platforms", "Would you like to be asked about each mobile platform", ' -m ')
 m_android = N ("android-r7", "Build on Android", 'android-r7,')
 m_maemo_qt = N ("maemo5-gtk", "Build on GTK version of Maemo", 'maemo5-gtk,')
 m_maemo_gtk = N ("maemo5-qt", "Build on QT version of Maemo", 'maemo5-qt,')
+m_none = NoPrompt (" -m none")
 
 u_all = N ("All Unit tests", "Run all unit tests on all chosen platforms", ' -u all')
 u_any = N ("Any unit tests", "Would you like to be asked about running each set of unit tests", ' -u ')
@@ -57,6 +63,7 @@ u_mochitest3 = N ("mochitest-3", "Run mochitest-3", 'mochitest-3,')
 u_mochitest4 = N ("mochitest-4", "Run mochitest-4", 'mochitest-4,')
 u_mochitest5 = N ("mochitest-5", "Run mochitest-5", 'mochitest-5,')
 u_mochitesto = N ("mochitest-o", "Run mochitest-o", 'mochitest-o,')
+u_none = NoPrompt (" -u none")
 
 t_all = N ("All talos tests", "Run all talos tests on all chosen platforms", ' -t all')
 t_any = N ("Any talos tests", "Would you like to be asked about running each set of talos tests", ' -t ')
@@ -70,6 +77,7 @@ t_dirty = N ("dirty", "Run dirty suite", 'dirty,')
 t_scroll = N ("scroll", "Run scroll suite", 'scroll,')
 t_cold = N ("cold", "Run cold suite", 'cold,')
 t_v8 = N ("v8", "Run v8 suite", 'v8,')
+t_none = NoPrompt (" -t none")
 
 
 
@@ -88,14 +96,14 @@ b_o.n = b_d
 b_d.y = d_all_m_all
 b_d.n = error
 
-
 d_all_m_all.y = u_all
 d_all_m_all.n = d_all
 
 d_all.y = m_all
 d_all.n = d_any
 d_any.y = d_linux
-d_any.n = m_all
+d_any.n = d_none
+d_none.next = m_all
 d_linux.y = d_linux64
 d_linux.n = d_linux64
 d_linux64.y = d_macosx
@@ -110,7 +118,8 @@ d_win32.n = D(m_all)
 m_all.y = u_all
 m_all.n = m_any
 m_any.y = m_android
-m_any.n = u_all
+m_any.n = m_none
+m_none.next = u_all
 m_android.y = m_maemo_qt
 m_android.n = m_maemo_qt
 m_maemo_qt.y = m_maemo_gtk
@@ -121,7 +130,8 @@ m_maemo_gtk.n = D(u_all)
 u_all.y = t_all
 u_all.n = u_any
 u_any.y = u_reftest
-u_any.n = t_all
+u_any.n = u_none
+u_none.next = t_all
 u_reftest.y = u_crashtest
 u_reftest.n = u_crashtest
 u_crashtest.y = u_xpcshell
@@ -150,7 +160,8 @@ u_mochitesto.n = D(t_all)
 t_all.y = finish
 t_all.n = t_any
 t_any.y = t_nochrome
-t_any.n = finish
+t_any.n = t_none
+t_none.next = finish
 t_nochrome.y = t_dromaeo
 t_nochrome.n = t_dromaeo
 t_dromaeo.y = t_a11y
@@ -181,24 +192,29 @@ def run_algorithm(state):
   node = a
   string = 'try:'
   while node != finish:
-    state.say(node.prompt + '?\n')
-    input = state.prompt()
-    if input in 'Yy':
-      string += node.action
-      node = node.y
-    elif input in 'Nn':
-      node = node.n
-    elif input == '?':
-      state.say(node.help)
-    else:
-      state.say("Invalid option, please try again")
-
     if node == error:
       state.say("Invalid selection")
       state.exit(-1)
     elif isinstance(node, D):
       string = string[:-1] # remove last character
       node = node.next
+    elif isinstance(node, NoPrompt):
+      string += node.action
+      node = node.next
+    elif isinstance(node, N):
+      state.say(node.prompt + '?\n')
+      input = state.prompt()
+      if input in 'Yy':
+        string += node.action
+        node = node.y
+      elif input in 'Nn':
+        node = node.n
+      elif input == '?':
+        state.say(node.help)
+      else:
+        state.say("Invalid option, please try again")
+
+
 
   ################
   # Hard to test these above, so use string search for weird flag combination
@@ -222,6 +238,7 @@ def run_algorithm(state):
 
   if string.find ('-p') != -1 and \
      string.find ('-p all') == -1 and \
+     string.find ('-p none') == -1 and \
      (sum([string.find(x) for x in desktops]) == -1*len(desktops)):
     state.say ("no desktop platform selected, despite asking for some")
     state.say ("Invalid selection")
@@ -229,6 +246,7 @@ def run_algorithm(state):
 
   if string.find ('-m') != -1 and \
      string.find ('-m all') == -1 and \
+     string.find ('-m none') == -1 and \
      (sum([string.find(x) for x in mobiles]) == -1*len(mobiles)):
     state.say ("no mobile platform selected, despite asking for some")
     state.say ("Invalid selection")
@@ -236,6 +254,7 @@ def run_algorithm(state):
 
   if string.find ('-u') != -1 and \
      string.find ('-u all') == -1 and \
+     string.find ('-u none') == -1 and \
      (sum([string.find(x) for x in unittests]) == -1*len(unittests)):
     state.say ("no unit tests selected, despite asking for some")
     state.say ("Invalid selection")
@@ -243,8 +262,16 @@ def run_algorithm(state):
 
   if string.find ('-t') != -1 and \
      string.find ('-t all') == -1 and \
+     string.find ('-t none') == -1 and \
      (sum([string.find(x) for x in taloss]) == -1*len(taloss)):
     state.say ("no talos tests selected, despite asking for some")
+    state.say ("Invalid selection")
+    state.exit(-1)
+
+  if string.find ('-a') == -1 and \
+     string.find('-p none') != -1 and \
+     string.find ('-m none') != -1:
+    state.say ("neither desktop nor mobile platforms were selected")
     state.say ("Invalid selection")
     state.exit(-1)
 
@@ -262,7 +289,7 @@ if __name__ == '__main__':
       print '\n' + string,
 
     def prompt(self):
-      return raw_input('[Yn?]\n')
+      return raw_input('[Ynh?]\n')
 
     def exit(self, code):
       sys.exit(code)
@@ -286,8 +313,8 @@ else:
       self.ui.flush()
 
     def prompt(self):
-      index = self.ui.promptchoice('[Yn?]', ['&Yes', '&no', '&?'], default=0)
-      return 'Yn?'[index]
+      index = self.ui.promptchoice('[Ynh?]', ['&Yes', '&no', '&h', '&?'], default=0)
+      return 'Ynh?'[index]
 
     def exit(self, code):
       sys.exit(code)
@@ -295,11 +322,11 @@ else:
 
   def run_mercurial_command(ui, repo, *args, **kwargs):
     """Build a TryChooser string by asking a few questions.
-    
+
 For all questions, choosing Y means adding something to the TryChooser string. Choosing ? shows context-sensitive help."""
     string = run_algorithm(HG_interface(ui, repo))
     ui.write(string + '\n')
-    
+
 
   # Mercurial interface
   cmdtable = { "trychooser": (run_mercurial_command, [], '') }
