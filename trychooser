@@ -31,23 +31,17 @@ b_od = N ("Both optimized and debug", "All builds and tests will run both on opt
 b_o = N ("Just optimized", "Only use optimized builds, do not use debug builds", ' -b o')
 b_d = N ("Just debug", "Only use debug builds, do not use optimized builds", ' -b d')
 
-d_all_m_all = N ("All platforms", "Build on all platforms, both desktop and mobile", ' -p all -m all')
-
-d_all = N ("All desktop platforms", "Build on all desktop platforms", ' -p all')
-d_any = N ("Any desktop platforms", "Would you like to be asked about each desktop platform", ' -p ')
-d_linux = N ("Linux", "Build on i386 (32-bit) linux", 'linux,')
-d_linux64 = N ("linux64", "Build on x86-64 (64-bit) linux", 'linux64,')
-d_macosx = N ("macosx", "Build on Mac OSX 10.5 (i386, 32-bit, part of a universal binary)", 'macosx,')
-d_macosx64 = N ("macosx64", "Build on Mac OSX 10.6 (x86-64, 64-bit, part of a universal binary)", 'macosx64,')
-d_win32 = N ("win32", "Build on Windows", 'win32,')
-d_none = NoPrompt (" -p none")
-
-m_all = N ("All mobile platforms", "Build on all mobile platforms", ' -m all')
-m_any = N ("Any mobile platforms", "Would you like to be asked about each mobile platform", ' -m ')
-m_android = N ("android-r7", "Build on Android", 'android-r7,')
-m_maemo_qt = N ("maemo5-gtk", "Build on GTK version of Maemo", 'maemo5-gtk,')
-m_maemo_gtk = N ("maemo5-qt", "Build on QT version of Maemo", 'maemo5-qt,')
-m_none = NoPrompt (" -m none")
+p_all = N ("All platforms", "Build on all platforms, both desktop and mobile", ' -p all')
+p_any = NoPrompt (" -p ")
+p_linux = N ("Linux", "Build on i386 (32-bit) linux", 'linux,')
+p_linux64 = N ("linux64", "Build on x86-64 (64-bit) linux", 'linux64,')
+p_macosx = N ("macosx", "Build on Mac OSX 10.5 (i386, 32-bit, part of a universal binary)", 'macosx,')
+p_macosx64 = N ("macosx64", "Build on Mac OSX 10.6 (x86-64, 64-bit, part of a universal binary)", 'macosx64,')
+p_win32 = N ("win32", "Build on Windows", 'win32,')
+p_android = N ("android-r7", "Build on Android", 'android-r7,')
+p_maemo_qt = N ("maemo5-gtk", "Build on GTK version of Maemo", 'maemo5-gtk,')
+p_maemo_gtk = N ("maemo5-qt", "Build on QT version of Maemo", 'maemo5-qt,')
+p_none = NoPrompt (" -p none")
 
 u_all = N ("All Unit tests", "Run all unit tests on all chosen platforms", ' -u all')
 u_any = N ("Any unit tests", "Would you like to be asked about running each set of unit tests", ' -u ')
@@ -89,43 +83,32 @@ t_none = NoPrompt (" -t none")
 a.y = finish
 a.n = b_od
 
-b_od.y = d_all_m_all
+b_od.y = p_all
 b_od.n = b_o
-b_o.y = d_all_m_all
+b_o.y = p_all
 b_o.n = b_d
-b_d.y = d_all_m_all
+b_d.y = p_all
 b_d.n = error
 
-d_all_m_all.y = u_all
-d_all_m_all.n = d_all
-
-d_all.y = m_all
-d_all.n = d_any
-d_any.y = d_linux
-d_any.n = d_none
-d_none.next = m_all
-d_linux.y = d_linux64
-d_linux.n = d_linux64
-d_linux64.y = d_macosx
-d_linux64.n = d_macosx
-d_macosx.y = d_macosx64
-d_macosx.n = d_macosx64
-d_macosx64.y = d_win32
-d_macosx64.n = d_win32
-d_win32.y = D(m_all)
-d_win32.n = D(m_all)
-
-m_all.y = u_all
-m_all.n = m_any
-m_any.y = m_android
-m_any.n = m_none
-m_none.next = u_all
-m_android.y = m_maemo_qt
-m_android.n = m_maemo_qt
-m_maemo_qt.y = m_maemo_gtk
-m_maemo_qt.n = m_maemo_gtk
-m_maemo_gtk.y = D(u_all)
-m_maemo_gtk.n = D(u_all)
+p_all.y = u_all
+p_all.n = p_any
+p_any.next = p_linux
+p_linux.y = p_linux64
+p_linux.n = p_linux64
+p_linux64.y = p_macosx
+p_linux64.n = p_macosx
+p_macosx.y = p_macosx64
+p_macosx.n = p_macosx64
+p_macosx64.y = p_win32
+p_macosx64.n = p_win32
+p_win32.y = p_android
+p_win32.n = p_android
+p_android.y = p_maemo_qt
+p_android.n = p_maemo_qt
+p_maemo_qt.y = p_maemo_gtk
+p_maemo_qt.n = p_maemo_gtk
+p_maemo_gtk.y = D(u_all)
+p_maemo_gtk.n = D(u_all)
 
 u_all.y = t_all
 u_all.n = u_any
@@ -220,15 +203,14 @@ def run_algorithm(state):
   # Hard to test these above, so use string search for weird flag combination
   ################
 
-  desktops = 'linux,linux64,macosx,macosx64,win32'.split(',')
-  mobiles = 'android-r7,maemo5-gtk,maemo5-qt'.split(',')
+  desktops = 'linux,linux64,macosx,macosx64,win32,android-r7,maemo5-gtk,maemo5-qt'.split(',')
   unittests = 'reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o'.split(',')
   taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'.split(',')
 
 
-  if string.find ('-p') + string.find ('-m') + string.find('-a') == -3:
+  if string.find ('-p') + string.find('-a') == -2:
     state.say("no platform selected")
-    state.say ("Invalid selection")
+    state.say ("Invalid selection: " + string)
     state.exit(-1)
 
   if string.find ('-b') + string.find('-a') == -2:
@@ -238,19 +220,11 @@ def run_algorithm(state):
 
   if string.find ('-p') != -1 and \
      string.find ('-p all') == -1 and \
-     string.find ('-p none') == -1 and \
      (sum([string.find(x) for x in desktops]) == -1*len(desktops)):
     state.say ("no desktop platform selected, despite asking for some")
     state.say ("Invalid selection")
     state.exit(-1)
 
-  if string.find ('-m') != -1 and \
-     string.find ('-m all') == -1 and \
-     string.find ('-m none') == -1 and \
-     (sum([string.find(x) for x in mobiles]) == -1*len(mobiles)):
-    state.say ("no mobile platform selected, despite asking for some")
-    state.say ("Invalid selection")
-    state.exit(-1)
 
   if string.find ('-u') != -1 and \
      string.find ('-u all') == -1 and \
