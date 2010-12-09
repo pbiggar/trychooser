@@ -215,23 +215,15 @@ def run_algorithm(state):
 
   if string.find ('-b') + string.find('-a') == -2:
     state.say ("no build selected")
-    state.say ("Invalid selection")
+    state.say ("Invalid selection: " + string)
     state.exit(-1)
-
-  if string.find ('-p') != -1 and \
-     string.find ('-p all') == -1 and \
-     (sum([string.find(x) for x in desktops]) == -1*len(desktops)):
-    state.say ("no desktop platform selected, despite asking for some")
-    state.say ("Invalid selection")
-    state.exit(-1)
-
 
   if string.find ('-u') != -1 and \
      string.find ('-u all') == -1 and \
      string.find ('-u none') == -1 and \
      (sum([string.find(x) for x in unittests]) == -1*len(unittests)):
     state.say ("no unit tests selected, despite asking for some")
-    state.say ("Invalid selection")
+    state.say ("Invalid selection: " + string)
     state.exit(-1)
 
   if string.find ('-t') != -1 and \
@@ -239,14 +231,7 @@ def run_algorithm(state):
      string.find ('-t none') == -1 and \
      (sum([string.find(x) for x in taloss]) == -1*len(taloss)):
     state.say ("no talos tests selected, despite asking for some")
-    state.say ("Invalid selection")
-    state.exit(-1)
-
-  if string.find ('-a') == -1 and \
-     string.find('-p none') != -1 and \
-     string.find ('-m none') != -1:
-    state.say ("neither desktop nor mobile platforms were selected")
-    state.say ("Invalid selection")
+    state.say ("Invalid selection: " + string)
     state.exit(-1)
 
   return string
