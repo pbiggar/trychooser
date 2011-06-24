@@ -23,10 +23,10 @@ tests = [
     ('NYNNNNNNNNYYY', '-b do -p maemo5-qt -u all -t all'),
     ('NYNNNNNNYNNYY', '-b do -p android-r7 -u all -t all'),
     ('NYYNNY', '-b do -p all -u none -t all'),
-    ('NYYNYYYYYYNYYYYYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
-    ('NYYNYYYYYYNYYYYNNY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4 -t all'),
-    ('NYYNYYYYYYNYYNNYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-5,mochitest-o -t all'),
-    ('NYYNYNNYYYNYYYYYYY', '-b do -p all -u xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
+    ('NYYNYYYYYYNYYYYYYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
+    ('NYYNYYYYYYNYYYYYNNY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4 -t all'),
+    ('NYYNYYYYYYNYYYNNYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-5,mochitest-o -t all'),
+    ('NYYNYNNYYYNYYYYYYYY', '-b do -p all -u xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
     ('NYYNYYYYYYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitests -t all'),
     ('NYYYNN', '-b do -p all -u all -t none'),
     ('NYYYNYYYYYYYYYYY', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'),
@@ -35,14 +35,14 @@ tests = [
     ]
 
 invalid_tests = [
-    'NYNNNNNNNNNYY', # No platforms
-    'NNNNYYY', # No builds
-    'NYYNYNNNNNNNNNNNNY', # Wanted unittests, none picked
-    'NYYYNYNNNNNNNNNN', # Wanted talos, none picked
+    ('NYNNNNNNNNNYY', ": try: -b do -p -u all -t all"), # No platforms
+    ('NNNNYYY', ""), # No builds
+    ('NYYNYNNNNNNNNNNNNY', ": try: -b do -p all -u -t none"), # Wanted unittests, none picked
+    ('NYYYNYNNNNNNNNNN', ": try: -b do -p all -u all -t"), # Wanted talos, none picked
     ]
 
 tests = [(a, 'try: ' + b) for (a,b) in tests]
-tests += [(a, 'Invalid selection') for a in invalid_tests]
+tests += [(a, 'Invalid selection' + b) for (a,b) in invalid_tests]
 
 def combine(output, input):
   result = ""

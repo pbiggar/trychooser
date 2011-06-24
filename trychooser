@@ -31,7 +31,7 @@ b_od = N ("Both optimized and debug", "All builds and tests will run both on opt
 b_o = N ("Just optimized", "Only use optimized builds, do not use debug builds", ' -b o')
 b_d = N ("Just debug", "Only use debug builds, do not use optimized builds", ' -b d')
 
-p_all = N ("All platforms", "Build on all platforms, both desktop and mobile", ' -p all')
+p_all = N ("All platforms", "Build on all platforms", ' -p all')
 p_any = NoPrompt (" -p ")
 p_linux = N ("Linux", "Build on i386 (32-bit) linux", 'linux,')
 p_linux64 = N ("linux64", "Build on x86-64 (64-bit) linux", 'linux64,')
@@ -206,7 +206,7 @@ def run_algorithm(state):
   # Hard to test these above, so use string search for weird flag combination
   ################
 
-  desktops = 'linux,linux64,macosx,macosx64,win32,android-r7,maemo5-gtk,maemo5-qt'.split(',')
+  platforms  = 'linux,linux64,macosx,macosx64,win32,android-r7,maemo5-gtk,maemo5-qt'.split(',')
   unittests = 'reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o'.split(',')
   taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'.split(',')
 
@@ -218,6 +218,13 @@ def run_algorithm(state):
 
   if string.find ('-b') + string.find('-a') == -2:
     state.say ("no build selected")
+    state.say ("Invalid selection: " + string)
+    state.exit(-1)
+
+  if string.find ('-p') != -1 and \
+     string.find ('-p all') == -1 and \
+     (sum([string.find(x) for x in platforms]) == -1*len(platforms)):
+    state.say ("no platforms selected, despite asking for some")
     state.say ("Invalid selection: " + string)
     state.exit(-1)
 
