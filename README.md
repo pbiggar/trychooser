@@ -25,7 +25,7 @@ To run the tests, run
 
 To run from the command line:
 
-  $ ./trychooser
+    $ ./trychooser
 
 
 ### Meta
