@@ -10,22 +10,23 @@ To install, add this line to you .hgrc:
 
 ### Running
 
-To run, type:
+To push to tryserver after asking you questions, type:
 
     $ hg trychooser
 
 
+### Command line
+
+To just read get a trysyntax from the command line:
+
+    $ ./trychooser
+
+
 ### Testing
+
 To run the tests, run
 
     $ ./trychooser_test
-
-
-### Command line
-
-To run from the command line:
-
-    $ ./trychooser
 
 
 ### Meta
@@ -33,4 +34,4 @@ To run from the command line:
 Based on [Lukas Blaak's web version](http://people.mozilla.org/~lsblakk/trychooser/trychooser.html)
 See also the [TryChooser page](https://wiki.mozilla.org/ReleaseEngineering/TryChooser)
 
-Bugs and patches to pbiggar@mozilla.com.
+Bugs and patches via [Github](https://github.com/pbiggar/trychooser)
