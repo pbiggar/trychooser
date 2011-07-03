@@ -67,7 +67,7 @@ t_dromaeo = N ("dromaeo", "Run dromaeo suite", 'dromaeo,')
 t_a11y = N ("a11y", "Run a11y suite", 'a11y,')
 t_svg = N ("svg", "Run svg suite", 'svg,')
 t_chrome = N ("chrome", "Run chrome suite", 'chrome,')
-t_tp4 = N ("tp4", "Run tp4 suite", 'tp4,')
+t_tp5 = N ("tp5", "Run tp5 suite", 'tp,')
 t_dirty = N ("dirty", "Run dirty suite", 'dirty,')
 t_scroll = N ("scroll", "Run scroll suite", 'scroll,')
 t_cold = N ("cold", "Run cold suite", 'cold,')
@@ -156,10 +156,10 @@ t_a11y.y = t_svg
 t_a11y.n = t_svg
 t_svg.y = t_chrome
 t_svg.n = t_chrome
-t_chrome.y = t_tp4
-t_chrome.n = t_tp4
-t_tp4.y = t_dirty
-t_tp4.n = t_dirty
+t_chrome.y = t_tp5
+t_chrome.n = t_tp5
+t_tp5.y = t_dirty
+t_tp5.n = t_dirty
 t_dirty.y = t_scroll
 t_dirty.n = t_scroll
 t_scroll.y = t_cold
@@ -208,7 +208,7 @@ def run_algorithm(state):
 
   platforms  = 'linux,linux64,macosx,macosx64,win32,android-r7,maemo5-gtk,maemo5-qt'.split(',')
   unittests = 'reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o'.split(',')
-  taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'.split(',')
+  taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,cold,v8'.split(',')
 
 
   if string.find ('-p') + string.find('-a') == -2:
