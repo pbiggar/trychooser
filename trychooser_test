@@ -29,9 +29,9 @@ tests = [
     ('NYYNYNNYYYNYYYYYYYY', '-b do -p all -u xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
     ('NYYNYYYYYYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitests -t all'),
     ('NYYYNN', '-b do -p all -u all -t none'),
-    ('NYYYNYYYYYYYYYYY', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'),
-    ('NYYYNYNNYYYYYYYY', '-b do -p all -u all -t a11y,svg,chrome,tp4,dirty,scroll,cold,v8'),
-    ('NYYYNYYYYYYYYYNN', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll'),
+    ('NYYYNYYYYYYYYYYY', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,cold,v8'),
+    ('NYYYNYNNYYYYYYYY', '-b do -p all -u all -t a11y,svg,chrome,tp,dirty,scroll,cold,v8'),
+    ('NYYYNYYYYYYYYYNN', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll'),
     ]
 
 invalid_tests = [
