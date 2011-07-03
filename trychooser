@@ -188,7 +188,7 @@ def run_algorithm(state):
       string += node.action
       node = node.next
     elif isinstance(node, N):
-      state.say(node.prompt + '?\n')
+      state.say(node.prompt + '?')
       input = state.prompt()
       if input in 'Yy':
         string += node.action
@@ -255,7 +255,7 @@ if __name__ == '__main__':
 
     # print isn't a function
     def say(self, string):
-      print '\n' + string,
+      print string
 
     def prompt(self):
       return raw_input('[Ynh?]\n')
@@ -282,7 +282,7 @@ else:
       self.repo = repo
 
     def say(self, string):
-      self.ui.write(string)
+      self.ui.write(string + '\n')
       self.ui.flush()
 
     def prompt(self):
