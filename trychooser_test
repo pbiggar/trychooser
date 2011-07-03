@@ -32,6 +32,7 @@ tests = [
     ('NYYYNYYYYYYYYYYY', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll,cold,v8'),
     ('NYYYNYNNYYYYYYYY', '-b do -p all -u all -t a11y,svg,chrome,tp4,dirty,scroll,cold,v8'),
     ('NYYYNYYYYYYYYYNN', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp4,dirty,scroll'),
+    ('NYYNYNNNNNYNN', '-b do -p all -u mochitests -t none'),
     ]
 
 invalid_tests = [
