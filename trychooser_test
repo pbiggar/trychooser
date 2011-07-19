@@ -11,7 +11,7 @@ def run (input):
 
 
 tests = [
-    ('Y', '-a'),
+    ('Y', '-b do -p all -u all -t all'),
     ('NYYYYY', '-b do -p all -u all -t all'),
     ('NNYYYY', '-b o -p all -u all -t all'),
     ('NNNYYYY', '-b d -p all -u all -t all'),
