@@ -26,7 +26,7 @@ error = object()
 # Build each node with it's data
 ################
 
-a = N ("Run everything", "Run all platforms, tests and talos, and don't ask any more questions", ' -a')
+a = N ("Run everything", "Run all platforms, tests and talos, and don't ask any more questions", ' -b do -p all -u all -t all')
 
 b_od = N ("Both optimized and debug", "All builds and tests will run both on optimized and debug builds", ' -b do')
 b_o = N ("Just optimized", "Only use optimized builds, do not use debug builds", ' -b o')
