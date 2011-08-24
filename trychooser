@@ -401,8 +401,6 @@ For all questions, choosing Y means adding something to the TryChooser string. C
 
     if repo[None].dirty():
       raise util.Abort(_("local changes found, refresh first"))
-    if not repo.mq.applied:
-      raise util.Abort(_("no patch currently applied"))
 
     if opts.get('message'):
       msg = opts.get('message')
