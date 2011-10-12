@@ -31,7 +31,7 @@ To run the tests, run
 
 ### Meta
 
-Based on [Lukas Blaak's web version](http://people.mozilla.org/~lsblakk/trychooser/trychooser.html)
+Based on Lukas Blakk's web version [UI](http://people.mozilla.org/~lsblakk/trychooser/trychooser.html)-[Code](http://hg.mozilla.org/build/tools/trychooser)
 See also the [TryChooser page](https://wiki.mozilla.org/ReleaseEngineering/TryChooser)
 
 Bugs and patches via [Github](https://github.com/pbiggar/trychooser)
