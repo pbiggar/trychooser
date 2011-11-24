@@ -172,8 +172,8 @@ u_crashtest3.y = u_crashtest_ipc
 u_crashtest3.n = u_crashtest_ipc
 u_crashtest_ipc.y = u_browser_chrome
 u_crashtest_ipc.n = u_browser_chrome
-u_browser_chrome.y = u.xpcshell
-u_browser_chrome.n = u.xpcshell
+u_browser_chrome.y = u_xpcshell
+u_browser_chrome.n = u_xpcshell
 u_xpcshell.y = u_jsreftest
 u_xpcshell.n = u_jsreftest
 u_jsreftest.y = u_jsreftest1
@@ -302,7 +302,7 @@ def run_algorithm(state):
   # Hard to test these above, so use string search for weird flag combination
   ################
 
-  platforms  = 'linux,linux64,macosx,macosx64,win32,android-r7,maemo5-gtk,maemo5-qt'.split(',')
+  platforms  = 'linux,linux64,macosx,macosx64,win32,android,android-xul'.split(',')
   unittests = 'reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o,mochitests'.split(',')
   taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,cold,v8'.split(',')
 
