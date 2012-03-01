@@ -460,6 +460,14 @@ For all questions, choosing Y means adding something to the TryChooser string. C
     ui.write(_("Push to try server...\n"))
     commands.push(ui, repo, "ssh://hg.mozilla.org/try", force=True)
 
+    # In Mercurial 2.1 phases support was added, and until Mozilla updates to
+    # this version and configures the try repository to be non-publishing, we
+    # need to reset the pushed patches to be editable again.
+    try:
+        commands.phase(ui, repo, 'mq()', draft=True, public=False, secret=False, force=True, rev="")
+    except AttributeError:
+        pass  # we're running a old Mercurial version, don't bother.
+
     mq.pop(ui, repo)
     mq.delete(ui, repo, 'trychooser')
 
