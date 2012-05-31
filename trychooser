@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"choose build options for and push to Mozilla's try server"
+
 import sys
 import re
 
