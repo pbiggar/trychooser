@@ -39,7 +39,6 @@ p_any = NoPrompt (" -p ")
 p_linux = N ("Linux", "Build on i386 (32-bit) linux", 'linux,')
 p_linux64 = N ("linux64", "Build on x86-64 (64-bit) linux", 'linux64,')
 p_linuxqt = N ("linuxqt", "Build on Qt linux", 'linuxqt,')
-p_macosx = N ("macosx", "Build on Mac OSX 10.5 (i386, 32-bit, part of a universal binary)", 'macosx,')
 p_macosx64 = N ("macosx64", "Build on Mac OSX 10.6 (x86-64, 64-bit, part of a universal binary)", 'macosx64,')
 p_win32 = N ("win32", "Build on Windows", 'win32,')
 p_win64 = N ("win32", "Build on Windows", 'win64,')
@@ -135,10 +134,8 @@ p_all.n = p_any
 p_any.next = p_linux
 p_linux.y = p_linux64
 p_linux.n = p_linux64
-p_linux64.y = p_macosx
-p_linux64.n = p_macosx
-p_macosx.y = p_macosx64
-p_macosx.n = p_macosx64
+p_linux64.y = p_macosx64
+p_linux64.n = p_macosx64
 p_macosx64.y = p_win32
 p_macosx64.n = p_win32
 p_win32.y = p_android
@@ -458,8 +455,11 @@ For all questions, choosing Y means adding something to the TryChooser string. C
     ui.write(_("Creates the trychooser mq entry...\n"))
     mq.new(ui, repo, 'trychooser', message=msg)
 
-    ui.write(_("Push to try server...\n"))
-    commands.push(ui, repo, "ssh://hg.mozilla.org/try", force=True)
+    if opts.get('dry_run'):
+      ui.write(_("Pretending to push to try server...\n"))
+    else:
+      ui.write(_("Push to try server...\n"))
+      commands.push(ui, repo, "ssh://hg.mozilla.org/try", force=True)
 
     # In Mercurial 2.1 phases support was added, and until Mozilla updates to
     # this version and configures the try repository to be non-publishing, we
@@ -476,7 +476,10 @@ For all questions, choosing Y means adding something to the TryChooser string. C
   cmdtable = {
       "trychooser":
       (run_mercurial_command,
-        [('m', 'message', '', _('use text as try message'))],
+        [
+          ('n', 'dry-run', False, _('do not perform actions, just print output')),
+          ('m', 'message', '', _('use text as try message'))
+        ],
           _('hg trychooser [-m TEXT]')
       )
   }
