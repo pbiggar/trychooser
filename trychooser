@@ -459,7 +459,10 @@ For all questions, choosing Y means adding something to the TryChooser string. C
       ui.write(_("Pretending to push to try server...\n"))
     else:
       ui.write(_("Push to try server...\n"))
-      commands.push(ui, repo, "ssh://hg.mozilla.org/try", force=True)
+      try:
+        commands.push(ui, repo, "ssh://hg.mozilla.org/try", force=True)
+      except:
+        ui.write("ERROR: failed to push to try server!\n");
 
     # In Mercurial 2.1 phases support was added, and until Mozilla updates to
     # this version and configures the try repository to be non-publishing, we
