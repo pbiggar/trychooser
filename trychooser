@@ -43,7 +43,6 @@ p_macosx64 = N ("macosx64", "Build on Mac OSX 10.6 (x86-64, 64-bit, part of a un
 p_win32 = N ("win32", "Build on Windows", 'win32,')
 p_win64 = N ("win32", "Build on Windows", 'win64,')
 p_android = N ("android", "Build on Android", 'android,')
-p_android_xul = N ("android-xul", "Build on Android", 'android-xul,')
 p_none = NoPrompt (" -p none")
 
 u_all = N ("All Unit tests", "Run all unit tests on all chosen platforms", ' -u all')
@@ -70,7 +69,6 @@ u_mochitesto = N ("mochitest-o", "Run mochitest-o", 'mochitest-o,')
 u_mochitest6 = N ("mochitest-6", "Run mochitest-6 (android-only)", 'mochitest-6,')
 u_mochitest7 = N ("mochitest-7", "Run mochitest-7 (android-only)", 'mochitest-7,')
 u_mochitest8 = N ("mochitest-8", "Run mochitest-8 (android-only)", 'mochitest-8,')
-u_browser_chrome = N ("browser-chrome", "Run browser-chrome (android-only)", 'browser-chrome,')
 u_reftest1 = N ("reftest-1", "Run reftest-1 (android-only)", 'reftest-1,')
 u_reftest2 = N ("reftest-2", "Run reftest-2 (android-only)", 'reftest-2,')
 u_reftest3 = N ("reftest-3", "Run reftest-3 (android-only)", 'reftest-3,')
@@ -99,8 +97,7 @@ t_v8 = N ("v8", "Run v8 suite", 'v8,')
 t_none = NoPrompt (" -t none")
 
 remote_talos = ','.join(['remote-ts', 'remote-tdhtml', 'remote-tsvg', 'remote-tsspider',
-                         'remote-tpan', 'remote-tp4m', 'remote-tp4m_nochrome',
-                         'remote-twinopen', 'remote-tzoom'])
+                         'remote-tpan', 'remote-tp4m', 'remote-tp4m_nochrome',])
 t_all_android = N ("All android talos tests", "Run all android talos tests", remote_talos)
 t_any_android = N ("Any android talos tests", "Run any android talos tests", '')
 t_svg_r = N ("remote-tsvg", "Run svg suite", 'remote-tsvg,')
@@ -110,8 +107,6 @@ t_ts_r = N ("remote-ts", "Run ts suite", 'remote-ts,')
 t_tdhtml_r = N ("remote-tdhtml", "Run tdhtml suite", 'remote-tdhtml,')
 t_tsspider_r = N ("remote-tsspdier", "Run tsspider suite", 'remote-tsspider,')
 t_tpan_r = N ("remote-tpan", "Run tpan suite", 'remote-tpan,')
-t_twinopen_r = N ("remote-twinopen", "Run twinopen suite", 'remote-twinopen,')
-t_tzoom_r = N ("remote-tzoom", "Run tzoom suite", 'remote-tzoom,')
 t_none_r = NoPrompt ("")
 
 ################
@@ -140,10 +135,8 @@ p_macosx64.y = p_win32
 p_macosx64.n = p_win32
 p_win32.y = p_android
 p_win32.n = p_android
-p_android.y = p_android_xul
-p_android.n = p_android_xul
-p_android_xul.y = D(u_all)
-p_android_xul.n = D(u_all)
+p_android.y = D(u_all)
+p_android.n = D(u_all)
 
 u_all.y = t_all
 u_all.n = u_any
@@ -170,10 +163,8 @@ u_crashtest2.y = u_crashtest3
 u_crashtest2.n = u_crashtest3
 u_crashtest3.y = u_crashtest_ipc
 u_crashtest3.n = u_crashtest_ipc
-u_crashtest_ipc.y = u_browser_chrome
-u_crashtest_ipc.n = u_browser_chrome
-u_browser_chrome.y = u_xpcshell
-u_browser_chrome.n = u_xpcshell
+u_crashtest_ipc.y = u_xpcshell
+u_crashtest_ipc.n = u_xpcshell
 u_xpcshell.y = u_jsreftest
 u_xpcshell.n = u_jsreftest
 u_jsreftest.y = u_jsreftest1
@@ -258,12 +249,8 @@ t_tdhtml_r.y = t_tsspider_r
 t_tdhtml_r.n = t_tsspider_r
 t_tsspider_r.y = t_tpan_r
 t_tsspider_r.n = t_tpan_r
-t_tpan_r.y = t_twinopen_r
-t_tpan_r.n = t_twinopen_r
-t_twinopen_r.y = t_tzoom_r
-t_twinopen_r.n = t_tzoom_r
-t_tzoom_r.y = D(finish)
-t_tzoom_r.n = D(finish)
+t_tpan_r.y = D(finish)
+t_tpan_r.n = D(finish)
 
 ################
 # The actual algorithm is simple
