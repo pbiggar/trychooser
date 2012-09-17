@@ -15,26 +15,24 @@ tests = [
     ('NYYYYY', '-b do -p all -u all -t all'),
     ('NNYYYY', '-b o -p all -u all -t all'),
     ('NNNYYYY', '-b d -p all -u all -t all'),
-    ('NYNYYYYYYYY', '-b do -p linux,linux64,macosx64,win32,android,android-xul -u all -t all'),
-    ('NYNNNYYNNYY', '-b do -p macosx64,win32 -u all -t all'),
-    ('NYNNNNNYYYY', '-b do -p android,android-xul -u all -t all'),
-    ('NYNNNNNNYYY', '-b do -p android-xul -u all -t all'),
-    ('NYNNNNNYNYY', '-b do -p android -u all -t all'),
+    ('NYNYYYYYYY', '-b do -p linux,linux64,macosx64,win32,android -u all -t all'),
+    ('NYNNNYYNYY', '-b do -p macosx64,win32 -u all -t all'),
+    ('NYNNNNNYYYY', '-b do -p android -u all -t all'),
     ('NYYNNY', '-b do -p all -u none -t all'),
-    ('NYYNYYYYYYYYYYYYYYYYYYYYYNYYYYYYYYYYY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,browser-chrome,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,mozmill-all,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-6,mochitest-7,mochitest-8,mochitest-o -t all'),
-    ('NYYNYYYYYYYYYYYYYYYYYYYYYNYYYYYNNNNNY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,browser-chrome,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,mozmill-all,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4 -t all'),
-    ('NYYNYYYYYYYYYYYYYYYYYYYYYNYYYNNYNNNYY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,browser-chrome,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,mozmill-all,opengl,mochitest-1,mochitest-2,mochitest-5,mochitest-o -t all'),
-    ('NYYNYNNNNNNNNNNNNYYNNNNNYNYYYYYYNNNYY', '-b do -p all -u xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
-    ('NYYNYYNNNNNYNNNNNYYNNNNNYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitests -t all'),
+    ('NYYNYYYYYYYYYYYYYYYYYYYYNYYYYYYYYYYY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,mozmill-all,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-6,mochitest-7,mochitest-8,mochitest-o -t all'),
+    ('NYYNYYYYYYYYYYYYYYYYYYYYNYYYYYNNNNNY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,mozmill-all,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4 -t all'),
+    ('NYYNYYYYYYYYYYYYYYYYYYYYNYYYNNYNNNYY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,mozmill-all,opengl,mochitest-1,mochitest-2,mochitest-5,mochitest-o -t all'),
+    ('NYYNYNNNNNNNNNNNYYNNNNNYNYYYYYYNNNYY', '-b do -p all -u xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
+    ('NYYNYYNNNNNYNNNNYYNNNNNYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,opengl,mochitests -t all'),
     ('NYYYNNNN', '-b do -p all -u all -t none'),
-    ('NYYYNYYYYYYYYYYYYY', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp,tp4,dirty,scroll,cold,v8,remote-ts,remote-tdhtml,remote-tsvg,remote-tsspider,remote-tpan,remote-tp4m,remote-tp4m_nochrome,remote-twinopen,remote-tzoom'),
-    ('NYYYNYNNYYYYYYYYYNYYYYYYYYYY', '-b do -p all -u all -t a11y,svg,chrome,tp,tp4,dirty,scroll,cold,v8,remote-tsvg,remote-tp4m_nochrome,remote-tp4m,remote-ts,remote-tdhtml,remote-tsspider,remote-tpan,remote-twinopen,remote-tzoom'),
-    ('NYYYNYYYYYYYNYYNNNYNNNNYNNNY', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,remote-tdhtml,remote-tzoom'),
-    ('NYYNYNNNNNNNNNNNNNNNNNNNNYNN', '-b do -p all -u mochitests -t none'),
+    ('NYYYNYYYYYYYYYYYYY', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp,tp4,dirty,scroll,cold,v8,remote-ts,remote-tdhtml,remote-tsvg,remote-tsspider,remote-tpan,remote-tp4m,remote-tp4m_nochrome'),
+    ('NYYYNYNNYYYYYYYYYNYYYYYYYYY', '-b do -p all -u all -t a11y,svg,chrome,tp,tp4,dirty,scroll,cold,v8,remote-tsvg,remote-tp4m_nochrome,remote-tp4m,remote-ts,remote-tdhtml,remote-tsspider,remote-tpan'),
+    ('NYYYNYYYYYYYNYYNNNYNNNNYNN', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,remote-tdhtml'),
+    ('NYYNYNNNNNNNNNNNNNNNNNNNYNN', '-b do -p all -u mochitests -t none'),
     ]
 
 invalid_tests = [
-    ('NYNNNNNNNYY', ": try: -b do -p -u all -t all"), # No platforms
+    ('NYNNNNNNYY', ": try: -b do -p -u all -t all"), # No platforms
     ('NNNNYYY', ""), # No builds
     ('NYYNYNNNNNNNNNNNNNNNNNNNNNNNN', ": try: -b do -p all -u -t none"), # Wanted unittests, none picked
     ('NYYYNYNNNNNNNNNNNNYNNNNNNNNN', ": try: -b do -p all -u all -t"), # Wanted talos, none picked
