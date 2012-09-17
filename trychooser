@@ -40,8 +40,8 @@ p_linux = N ("Linux", "Build on i386 (32-bit) linux", 'linux,')
 p_linux64 = N ("linux64", "Build on x86-64 (64-bit) linux", 'linux64,')
 p_linuxqt = N ("linuxqt", "Build on Qt linux", 'linuxqt,')
 p_macosx64 = N ("macosx64", "Build on Mac OSX 10.6 (x86-64, 64-bit, part of a universal binary)", 'macosx64,')
-p_win32 = N ("win32", "Build on Windows", 'win32,')
-p_win64 = N ("win32", "Build on Windows", 'win64,')
+p_win32 = N ("win32", "Build on Windows (32-bit)", 'win32,')
+p_win64 = N ("win64", "Build on Windows (64-bit)", 'win64,')
 p_android = N ("android", "Build on Android", 'android,')
 p_none = NoPrompt (" -p none")
 
@@ -135,8 +135,10 @@ p_linux64.y = p_macosx64
 p_linux64.n = p_macosx64
 p_macosx64.y = p_win32
 p_macosx64.n = p_win32
-p_win32.y = p_android
-p_win32.n = p_android
+p_win32.y = p_win64
+p_win32.n = p_win64
+p_win64.y = p_android
+p_win64.n = p_android
 p_android.y = D(u_all)
 p_android.n = D(u_all)
 
