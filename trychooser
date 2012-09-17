@@ -43,6 +43,7 @@ p_macosx64 = N ("macosx64", "Build on Mac OSX 10.6 (x86-64, 64-bit, part of a un
 p_win32 = N ("win32", "Build on Windows (32-bit)", 'win32,')
 p_win64 = N ("win64", "Build on Windows (64-bit)", 'win64,')
 p_android = N ("android", "Build on Android", 'android,')
+p_android_armv6 = N ("android-armv6", "Build on Android Armv6", 'android-armv6,')
 p_none = NoPrompt (" -p none")
 
 u_all = N ("All Unit tests", "Run all unit tests on all chosen platforms", ' -u all')
@@ -139,8 +140,10 @@ p_win32.y = p_win64
 p_win32.n = p_win64
 p_win64.y = p_android
 p_win64.n = p_android
-p_android.y = D(u_all)
-p_android.n = D(u_all)
+p_android.y = p_android_armv6
+p_android.n = p_android_armv6
+p_android_armv6.y = D(u_all)
+p_android_armv6.n = D(u_all)
 
 u_all.y = t_all
 u_all.n = u_any
