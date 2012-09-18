@@ -25,9 +25,9 @@ tests = [
     ('NYYNYNNNNNNNNNNNNYYNNNNYNNNYYYYYYNNNYY', '-b do -p all -u xpcshell,jsreftest,marionette,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
     ('NYYNYYNNNNNNYNNNNYYNNNNYNNYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,marionette,mochitests -t all'),
     ('NYYYNNNN', '-b do -p all -u all -t none'),
-    ('NYYYNYYYYYYYYYYYYY', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp,tp4,dirty,scroll,cold,v8,remote-ts,remote-tdhtml,remote-tsvg,remote-tsspider,remote-tpan,remote-tp4m,remote-tp4m_nochrome'),
-    ('NYYYNYNNYYYYYYYYYNYYYYYYYYY', '-b do -p all -u all -t a11y,svg,chrome,tp,tp4,dirty,scroll,cold,v8,remote-tsvg,remote-tp4m_nochrome,remote-tp4m,remote-ts,remote-tdhtml,remote-tsspider,remote-tpan'),
-    ('NYYYNYYYYYYYNYYNNNYNNNNYNN', '-b do -p all -u all -t nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,remote-tdhtml'),
+    ('NYYYNYYYYYYYYYYYYY', '-b do -p all -u all -t tpn,nochromer,other,dirtypaint,svgr,dromaeojs,xperf,remote-ts,remote-tdhtml,remote-tsvg,remote-tpan,remote-trobopan,remote-trobocheck,remote-troboprovider,remote-trobocheck2,remote-trobocheck3,remote-tp4m_nochrome'),
+    ('NYYYNYNNYYYYYNYYYYYYYYYYY', '-b do -p all -u all -t other,dirtypaint,svgr,dromaeojs,xperf,remote-ts,remote-tdhtml,remote-tsvg,remote-tpan,remote-trobopan,remote-trobocheck,remote-trobocheck2,remote-trobocheck3,remote-troboprovider,remote-tp4m_nochrome'),
+    ('NYYYNYYYYYYNYNYNNNNNNNNYN', '-b do -p all -u all -t tpn,nochromer,other,dirtypaint,svgr,xperf,remote-troboprovider'),
     ('NYYNYNNNNNNNNNNNNNNNNNNNNNYNN', '-b do -p all -u mochitests -t none'),
     ]
 
@@ -35,7 +35,7 @@ invalid_tests = [
     ('NYNNNNNNNNYY', ": try: -b do -p -u all -t all"), # No platforms
     ('NNNNYYY', ""), # No builds
     ('NYYNYNNNNNNNNNNNNNNNNNNNNNNNNNN', ": try: -b do -p all -u -t none"), # Wanted unittests, none picked
-    ('NYYYNYNNNNNNNNNNNNYNNNNNNNNN', ": try: -b do -p all -u all -t"), # Wanted talos, none picked
+    ('NYYYNYNNNNNNNNYNNNNNNNNNN', ": try: -b do -p all -u all -t"), # Wanted talos, none picked
     ]
 
 tests = [(a, 'try: ' + b) for (a,b) in tests]
