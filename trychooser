@@ -38,12 +38,15 @@ p_all = N ("All platforms", "Build on all platforms", ' -p all')
 p_any = NoPrompt (" -p ")
 p_linux = N ("Linux", "Build on i386 (32-bit) linux", 'linux,')
 p_linux64 = N ("linux64", "Build on x86-64 (64-bit) linux", 'linux64,')
-p_linuxqt = N ("linuxqt", "Build on Qt linux", 'linuxqt,')
 p_macosx64 = N ("macosx64", "Build on Mac OSX 10.6 (x86-64, 64-bit, part of a universal binary)", 'macosx64,')
 p_win32 = N ("win32", "Build on Windows (32-bit)", 'win32,')
 p_win64 = N ("win64", "Build on Windows (64-bit)", 'win64,')
 p_android = N ("android", "Build on Android", 'android,')
 p_android_armv6 = N ("android-armv6", "Build on Android Armv6", 'android-armv6,')
+p_android_noion = N ("android-noion", "Build on Android without IonMonkey", 'android-noion,')
+p_ics_armv7a_gecko = N ("ics_armv7a_gecko", "Build on the B2G emulator", 'ics_armv7a_gecko,')
+p_panda = N ("panda", "Build on panda (B2G automation board)", 'panda,')
+p_unagi = N ("unagi", "Build on unagi (B2G device image)", 'unagi,')
 p_none = NoPrompt (" -p none")
 
 u_all = N ("All Unit tests", "Run all unit tests on all chosen platforms", ' -u all')
@@ -142,8 +145,16 @@ p_win64.y = p_android
 p_win64.n = p_android
 p_android.y = p_android_armv6
 p_android.n = p_android_armv6
-p_android_armv6.y = D(u_all)
-p_android_armv6.n = D(u_all)
+p_android_armv6.y = p_android_noion
+p_android_armv6.n = p_android_noion
+p_android_noion.y = p_ics_armv7a_gecko
+p_android_noion.n = p_ics_armv7a_gecko
+p_ics_armv7a_gecko.y = p_panda
+p_ics_armv7a_gecko.n = p_panda
+p_panda.y = p_unagi
+p_panda.n = p_unagi
+p_unagi.y = D(u_all)
+p_unagi.n = D(u_all)
 
 u_all.y = t_all
 u_all.n = u_any
@@ -298,7 +309,7 @@ def run_algorithm(state):
   # Hard to test these above, so use string search for weird flag combination
   ################
 
-  platforms  = 'linux,linux64,macosx,macosx64,win32,android,android-xul'.split(',')
+  platforms  = 'linux,linux64,macosx64,win32,win64,android,android-armv6,android-noion,ics_armv7a_gecko,panda,unagi'.split(',')
   unittests = 'reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o,mochitests'.split(',')
   taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,cold,v8'.split(',')
 
