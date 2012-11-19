@@ -19,22 +19,22 @@ tests = [
     ('NYNNNYYNNNNNNNYY', '-b do -p macosx64,win32 -u all -t all'),
     ('NYNNNNNNYNNNNNYYY', '-b do -p android -u all -t all'),
     ('NYYNNY', '-b do -p all -u none -t all'),
-    ('NYYNYYYYYYYYYYYYYYYYYYYYYYNYYYYYYYYYYY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-4,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,marionette,mozmill,robocop,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-6,mochitest-7,mochitest-8,mochitest-o -t all'),
-    ('NYYNYYYYYYYYYYYYYYYYYYYYYYNYYYYYNNNNNY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-4,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,marionette,mozmill,robocop,mochitest-1,mochitest-2,mochitest-3,mochitest-4 -t all'),
-    ('NYYNYYYYYYYYYYYYYYYYYYYYYYNYYYNNYNNNYY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-4,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,marionette,mozmill,robocop,mochitest-1,mochitest-2,mochitest-5,mochitest-o -t all'),
-    ('NYYNYNNNNNNNNNNNNYYNNNNYNNNYYYYYYNNNYY', '-b do -p all -u xpcshell,jsreftest,marionette,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o -t all'),
-    ('NYYNYYNNNNNNYNNNNYYNNNNYNNYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,marionette,mochitests -t all'),
+    ('NYYNYYYYYYYYYYYYYYYYYYYYYYYYYNYYYYYYYYYYYY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-4,reftest-5,reftest-6,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,marionette,marionette-webapi,mozmill,robocop,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-6,mochitest-7,mochitest-8,mochitest-bc,mochitest-o -t all'),
+    ('NYYNYYYYYYYYYYYYYYYYYYYYYYYYYNYYYYYNNNNNNY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-4,reftest-5,reftest-6,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,marionette,marionette-webapi,mozmill,robocop,mochitest-1,mochitest-2,mochitest-3,mochitest-4 -t all'),
+    ('NYYNYYYYYYYYYYYYYYYYYYYYYYYYYNYYYNNYNNNYYY', '-b do -p all -u reftest,reftest-1,reftest-2,reftest-3,reftest-4,reftest-5,reftest-6,reftest-ipc,reftest-no-accel,crashtest,crashtest-1,crashtest-2,crashtest-3,crashtest-ipc,xpcshell,jsreftest,jsreftest-1,jsreftest-2,jsreftest-3,jetpack,marionette,marionette-webapi,mozmill,robocop,mochitest-1,mochitest-2,mochitest-5,mochitest-bc,mochitest-o -t all'),
+    ('NYYNYNNNNNNNNNNNNNNYYNNNNYYNNNYYYYYYNNNYYY', '-b do -p all -u xpcshell,jsreftest,marionette,marionette-webapi,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-bc,mochitest-o -t all'),
+    ('NYYNYYNNNNNNNNYNNNNYYNNNNYYNNYYY', '-b do -p all -u reftest,crashtest,xpcshell,jsreftest,marionette,marionette-webapi,mochitests -t all'),
     ('NYYYNNNN', '-b do -p all -u all -t none'),
     ('NYYYNYYYYYYYYYYYYY', '-b do -p all -u all -t tpn,nochromer,other,dirtypaint,svgr,dromaeojs,xperf,remote-ts,remote-tdhtml,remote-tsvg,remote-tpan,remote-trobopan,remote-trobocheck,remote-troboprovider,remote-trobocheck2,remote-trobocheck3,remote-tp4m_nochrome'),
     ('NYYYNYNNYYYYYNYYYYYYYYYYY', '-b do -p all -u all -t other,dirtypaint,svgr,dromaeojs,xperf,remote-ts,remote-tdhtml,remote-tsvg,remote-tpan,remote-trobopan,remote-trobocheck,remote-trobocheck2,remote-trobocheck3,remote-troboprovider,remote-tp4m_nochrome'),
     ('NYYYNYYYYYYNYNYNNNNNNNNYN', '-b do -p all -u all -t tpn,nochromer,other,dirtypaint,svgr,xperf,remote-troboprovider'),
-    ('NYYNYNNNNNNNNNNNNNNNNNNNNNYNN', '-b do -p all -u mochitests -t none'),
+    ('NYYNYNNNNNNNNNNNNNNNNNNNNNNNNYNN', '-b do -p all -u mochitests -t none'),
     ]
 
 invalid_tests = [
     ('NYNNNNNNNNNNNNYY', ": try: -b do -p -u all -t all"), # No platforms
     ('NNNNYYY', ""), # No builds
-    ('NYYNYNNNNNNNNNNNNNNNNNNNNNNNNNN', ": try: -b do -p all -u -t none"), # Wanted unittests, none picked
+    ('NYYNYNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN', ": try: -b do -p all -u -t none"), # Wanted unittests, none picked
     ('NYYYNYNNNNNNNNYNNNNNNNNNN', ": try: -b do -p all -u all -t"), # Wanted talos, none picked
     ]
 

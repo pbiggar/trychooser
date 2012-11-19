@@ -68,6 +68,7 @@ u_mochitest2 = N ("mochitest-2", "Run mochitest-2", 'mochitest-2,')
 u_mochitest3 = N ("mochitest-3", "Run mochitest-3", 'mochitest-3,')
 u_mochitest4 = N ("mochitest-4", "Run mochitest-4", 'mochitest-4,')
 u_mochitest5 = N ("mochitest-5", "Run mochitest-5", 'mochitest-5,')
+u_mochitestbc = N ("mochitest-bc", "Run mochitest-browser-chrome", 'mochitest-bc,')
 u_mochitesto = N ("mochitest-o", "Run mochitest-o", 'mochitest-o,')
 ## Android only suite names
 u_mochitest6 = N ("mochitest-6", "Run mochitest-6 (android-only)", 'mochitest-6,')
@@ -84,6 +85,10 @@ u_jsreftest1 = N ("jsreftest-1", "Run jsreftests-1 (android-only)", 'jsreftest-1
 u_jsreftest2 = N ("jsreftest-2", "Run jsreftests-2 (android-only)", 'jsreftest-2,')
 u_jsreftest3 = N ("jsreftest-3", "Run jsreftests-3 (android-only)", 'jsreftest-3,')
 u_robocop = N ("robocop", "Run robocop tests (android-only)", 'robocop,')
+## B2G only suite names
+u_reftest5 = N ("reftest-5", "Run reftest-5 (B2G-only)", 'reftest-5,')
+u_reftest6 = N ("reftest-6", "Run reftest-6 (B2G-only)", 'reftest-6,')
+u_marionette_webapi = N ("marionette-webapi", "Run marionette-webapi (B2G-only)", 'marionette-webapi,')
 
 u_none = NoPrompt (" -u none")
 
@@ -169,8 +174,12 @@ u_reftest2.y = u_reftest3
 u_reftest2.n = u_reftest3
 u_reftest3.y = u_reftest4
 u_reftest3.n = u_reftest4
-u_reftest4.y = u_reftest_ipc
-u_reftest4.n = u_reftest_ipc
+u_reftest4.y = u_reftest5
+u_reftest4.n = u_reftest5
+u_reftest5.y = u_reftest6
+u_reftest5.n = u_reftest6
+u_reftest6.y = u_reftest_ipc
+u_reftest6.n = u_reftest_ipc
 u_reftest_ipc.y = u_reftest_naccel
 u_reftest_ipc.n = u_reftest_naccel
 u_reftest_naccel.y = u_crashtest
@@ -197,8 +206,10 @@ u_jsreftest3.y = u_jetpack
 u_jsreftest3.n = u_jetpack
 u_jetpack.y = u_marionette
 u_jetpack.n = u_marionette
-u_marionette.y = u_mozmill
-u_marionette.n = u_mozmill
+u_marionette.y = u_marionette_webapi
+u_marionette.n = u_marionette_webapi
+u_marionette_webapi.y = u_mozmill
+u_marionette_webapi.n = u_mozmill
 u_mozmill.y = u_robocop
 u_mozmill.n = u_robocop
 u_robocop.y = u_mochitests
@@ -221,8 +232,10 @@ u_mochitest6.y = u_mochitest7
 u_mochitest6.n = u_mochitest7
 u_mochitest7.y = u_mochitest8
 u_mochitest7.n = u_mochitest8
-u_mochitest8.y = u_mochitesto
-u_mochitest8.n = u_mochitesto
+u_mochitest8.y = u_mochitestbc
+u_mochitest8.n = u_mochitestbc
+u_mochitestbc.y = u_mochitesto
+u_mochitestbc.n = u_mochitesto
 u_mochitesto.y = D(t_all)
 u_mochitesto.n = D(t_all)
 
@@ -310,7 +323,7 @@ def run_algorithm(state):
   ################
 
   platforms  = 'linux,linux64,macosx64,win32,win64,android,android-armv6,android-noion,ics_armv7a_gecko,panda,unagi'.split(',')
-  unittests = 'reftest,crashtest,xpcshell,jsreftest,opengl,mochitest-1,mochitest-2,mochitest-3,mochitest-4,mochitest-5,mochitest-o,mochitests'.split(',')
+  unittests = 'reftest,reftest-ipc,reftest-no-accel,crashtest,crashtest-ipc,xpcshell,jsreftest,jetpack,marionette,mozmill,mochitests,reftest-1,reftest-2,reftest-3,reftest-4,jsreftest-1,jsreftest-2,jsreftest-3,crashtest-2,crashtest-3,mochitest-6,mochitest-7,mochitest-8,robocop,reftest-1,reftest-2,reftest-3,reftest-4,reftest-5,reftest-6,marionette-webapi'.split(',')
   taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,cold,v8'.split(',')
 
 
