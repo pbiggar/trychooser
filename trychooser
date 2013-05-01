@@ -480,7 +480,8 @@ For all questions, choosing Y means adding something to the TryChooser string. C
     else:
       ui.write(_("Push to try server...\n"))
       try:
-        commands.push(ui, repo, "ssh://hg.mozilla.org/try", force=True)
+        commands.push(ui, repo, "ssh://hg.mozilla.org/try", force=True,
+            rev=[repo['.'].rev()])
       except:
         ui.write("ERROR: failed to push to try server!\n");
 
