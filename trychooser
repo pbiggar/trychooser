@@ -4,6 +4,7 @@
 
 import sys
 import re
+import inspect
 
 # A node in the decision tree
 class N: # Node
@@ -362,7 +363,18 @@ def run_algorithm(state):
 
   return string
 
-
+# Wrapper function for ui.promptchoice because newer versions take two 
+# parameters with a unified message and choices string and older versions take
+# three parameters with separate strings.
+def promptchoice(ui, prompt, choices):
+  num_args = len(inspect.getargspec(ui.promptchoice)[0])
+  if num_args == 4:
+    return ui.promptchoice(prompt, choices, default=0)
+  elif num_args == 3:
+    prompt_list = [prompt]
+    prompt_list.extend(choices)
+    unifed_prompt = ' $$ '.join(prompt_list)
+    return ui.promptchoice(unifed_prompt, default=0)
 
 if __name__ == '__main__':
 
@@ -402,7 +414,7 @@ else:
       self.ui.flush()
 
     def prompt(self):
-      index = self.ui.promptchoice('[Ynh?]', ['&Yes', '&no', '&h', '&?'], default=0)
+      index = promptchoice(self.ui, '[Ynh?]', ['&Yes', '&no', '&h', '&?'])
       return 'Ynh?'[index]
 
     def exit(self, code):
@@ -410,7 +422,7 @@ else:
 
   def suggest_results_bug(ui, repo):
     ui.write('Leave a comment in a bug on completion?\n')
-    if ui.promptchoice('[Yn]', ['&Yes', '&no'], default=0):
+    if promptchoice(ui, '[Yn]', ['&Yes', '&no']):
       return None
 
     # Derive a suggested bug number in which to leave results (regex stolen from bzexport.py)
