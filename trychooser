@@ -324,7 +324,7 @@ def run_algorithm(state):
   ################
 
   platforms  = 'linux,linux64,macosx64,win32,win64,android,android-armv6,android-noion,emulator,panda,unagi'.split(',')
-  unittests = 'reftest,reftest-ipc,reftest-no-accel,crashtest,crashtest-ipc,xpcshell,jsreftest,jetpack,marionette,mozmill,mochitests,reftest-1,reftest-2,reftest-3,reftest-4,jsreftest-1,jsreftest-2,jsreftest-3,crashtest-2,crashtest-3,mochitest-6,mochitest-7,mochitest-8,robocop,reftest-1,reftest-2,reftest-3,reftest-4,reftest-5,reftest-6,marionette-webapi'.split(',')
+  unittests = 'reftest,reftest-ipc,reftest-no-accel,crashtest,crashtest-ipc,xpcshell,jsreftest,jetpack,marionette,mozmill,mochitests,reftest-1,reftest-2,reftest-3,reftest-4,jsreftest-1,jsreftest-2,jsreftest-3,crashtest-2,crashtest-3,mochitest-6,mochitest-7,mochitest-8,mochitest-bc,robocop,reftest-1,reftest-2,reftest-3,reftest-4,reftest-5,reftest-6,marionette-webapi'.split(',')
   taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,cold,v8'.split(',')
 
 
