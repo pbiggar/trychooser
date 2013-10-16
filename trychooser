@@ -85,7 +85,10 @@ u_crashtest3 = N ("crashtest-3", "Run crashtest-3 (android-only)", 'crashtest-3,
 u_jsreftest1 = N ("jsreftest-1", "Run jsreftests-1 (android-only)", 'jsreftest-1,')
 u_jsreftest2 = N ("jsreftest-2", "Run jsreftests-2 (android-only)", 'jsreftest-2,')
 u_jsreftest3 = N ("jsreftest-3", "Run jsreftests-3 (android-only)", 'jsreftest-3,')
-u_robocop = N ("robocop", "Run robocop tests (android-only)", 'robocop,')
+u_robocop1 = N ("robocop-1", "Run robocop-1 tests (android-only)", 'robocop-1,')
+u_robocop2 = N ("robocop-2", "Run robocop-2 tests (android-only)", 'robocop-2,')
+u_robocop3 = N ("robocop-3", "Run robocop-3 tests (android-only)", 'robocop-3,')
+u_robocop4 = N ("robocop-4", "Run robocop-4 tests (android-only)", 'robocop-4,')
 ## B2G only suite names
 u_reftest5 = N ("reftest-5", "Run reftest-5 (B2G-only)", 'reftest-5,')
 u_reftest6 = N ("reftest-6", "Run reftest-6 (B2G-only)", 'reftest-6,')
@@ -211,10 +214,16 @@ u_marionette.y = u_marionette_webapi
 u_marionette.n = u_marionette_webapi
 u_marionette_webapi.y = u_mozmill
 u_marionette_webapi.n = u_mozmill
-u_mozmill.y = u_robocop
-u_mozmill.n = u_robocop
-u_robocop.y = u_mochitests
-u_robocop.n = u_mochitests
+u_mozmill.y = u_robocop1
+u_mozmill.n = u_robocop1
+u_robocop1.y = u_robocop2
+u_robocop1.n = u_robocop2
+u_robocop2.y = u_robocop3
+u_robocop2.n = u_robocop3
+u_robocop3.y = u_robocop4
+u_robocop3.n = u_robocop4
+u_robocop4.y = u_mochitests
+u_robocop4.n = u_mochitests
 u_mochitests.y = D(t_all)
 u_mochitests.n = u_mochitests_any
 u_mochitests_any.y = u_mochitest1
@@ -324,7 +333,7 @@ def run_algorithm(state):
   ################
 
   platforms  = 'linux,linux64,macosx64,win32,win64,android,android-armv6,android-noion,emulator,panda,unagi'.split(',')
-  unittests = 'reftest,reftest-ipc,reftest-no-accel,crashtest,crashtest-ipc,xpcshell,jsreftest,jetpack,marionette,mozmill,mochitests,reftest-1,reftest-2,reftest-3,reftest-4,jsreftest-1,jsreftest-2,jsreftest-3,crashtest-2,crashtest-3,mochitest-6,mochitest-7,mochitest-8,mochitest-bc,robocop,reftest-1,reftest-2,reftest-3,reftest-4,reftest-5,reftest-6,marionette-webapi'.split(',')
+  unittests = 'reftest,reftest-ipc,reftest-no-accel,crashtest,crashtest-ipc,xpcshell,jsreftest,jetpack,marionette,mozmill,mochitests,reftest-1,reftest-2,reftest-3,reftest-4,jsreftest-1,jsreftest-2,jsreftest-3,crashtest-2,crashtest-3,mochitest-6,mochitest-7,mochitest-8,mochitest-bc,robocop-1,robocop-2,robocop-3,robocop-4,reftest-1,reftest-2,reftest-3,reftest-4,reftest-5,reftest-6,marionette-webapi'.split(',')
   taloss = 'nochrome,dromaeo,a11y,svg,chrome,tp,dirty,scroll,cold,v8'.split(',')
 
 
